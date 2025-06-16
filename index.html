@@ -1,51 +1,56 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Projects</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jonathan Mey-Tal's Projects</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>Jonathan's Portfolio</h1>
-    <p>Explore my AI and software engineering projects</p>
+    <h1>Projects</h1>
   </header>
 
   <main>
-    <!-- Thesis Project -->
-    <section class="project">
-      <h2>Thesis Project (2025)</h2>
-      <p>A reasoning LLM agent system using DSPy and SPARQL on RDF knowledge graphs.</p>
-      <div class="gallery">
-        <img src="projects/thesis/1.jpg" alt="Thesis image 1">
-        <img src="projects/thesis/2.jpg" alt="Thesis image 2">
-      </div>
+    <section>
+      <h2>My Thesis <span class="year">(2025)</span></h2>
+      <p>The goal of my thesis is to build an accurate and consistent LLM-based agent system capable of answering and reasoning about complex temporal questions grounded in a given document.</p>
+      <p>The core idea is to convert the document into a time-focused RDF knowledge graph, which can be queried using SPARQL to retrieve the desired information. I use the DSPy framework to integrate the different LLM modules and agents, and for their prompt optimization methods.</p>
+      <p>The project includes:</p>
+      <ul>
+        <li><strong>OWL Schema Generation:</strong> An LLM module (implemented in DSPy and optimized using a small generative dataset I created) produces an OWL schema that captures the core structure and concepts of the text. The schema defines the entity classes and possible relations for the final graph.</li>
+        <li><strong>Entity Extraction and Linking:</strong> I use GLiNER for entity extraction and ReLiK for both entity linking and relation extraction.</li>
+        <li><strong>RDF Graph Construction:</strong> An iterative loop where an LLM generates a candidate graph, which is validated using rdflib. Another LLM generates questions, queries the graph with SPARQL, and uses errors to refine the graph.</li>
+        <li><strong>SPARQL Query Generation:</strong> I use Spinach—an agent-based method to translate natural language questions into accurate SPARQL queries.</li>
+      </ul>
     </section>
 
-    <!-- AudioCorrect Project -->
-    <section class="project">
-      <h2>AudioCorrect (2025)</h2>
-      <p>Speech editing app using WhisperX and TTS (Tortoise / ElevenLabs).</p>
-      <div class="gallery">
-        <img src="projects/audiocorrect/1.png" alt="AudioCorrect 1">
-        <img src="projects/audiocorrect/2.png" alt="AudioCorrect 2">
-      </div>
+    <section>
+      <h2>AudioCorrect <span class="year">(2025)</span></h2>
+      <p>This project explores using speech and audio AI models to build an app that can correct mispronounced or incorrect words in a recording. The user can edit the transcript, and the system modifies the audio accordingly.</p>
+      <p>Main steps:</p>
+      <ol>
+        <li>Transcribe audio with WhisperX and extract word-level timings.</li>
+        <li>Identify segments to insert, delete, or replace.</li>
+        <li>Generate audio using TTS. I tried two options: Tortoise (local, slow, low quality) and ElevenLabs API (fast, high quality).</li>
+        <li>Assemble the new audio, using volume adjustments, silence padding, and fade effects for smoother transitions.</li>
+      </ol>
+      <img src="AudioCorrecrAPP.png" alt="AudioCorrect App Screenshot" style="width:75%; margin-top:1em;">
     </section>
 
-    <!-- Redress Project -->
-    <section class="project">
-      <h2>Redress (Samsung Hackathon, 2023)</h2>
-      <p>Second-hand clothing search app powered by CLIP vector search.</p>
-      <div class="gallery">
-        <img src="projects/redress/1.png" alt="Redress 1">
-        <img src="projects/redress/2.png" alt="Redress 2">
-      </div>
+    <section>
+      <h2>ReDress <span class="year">(2023)</span></h2>
+      <p><em>2nd place at the Samsung NEXT Hackathon for Mobile Generative AI</em></p>
+      <p>We created a second-hand clothing marketplace app using CLIP, a model that aligns images and text in the same vector space for intuitive search and listing.</p>
+      <ul>
+        <li><strong>For buyers:</strong> Search using natural language, which is matched to images using a vector database—no filters or dropdowns needed.</li>
+        <li><strong>For sellers:</strong> Upload an image and a price. No need for manual descriptions or categories.</li>
+      </ul>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 Jonathan Mey Tal</p>
+    <p>© 2025 Jonathan Mey-Tal</p>
   </footer>
 </body>
 </html>
