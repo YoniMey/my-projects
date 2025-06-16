@@ -4,47 +4,105 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jonathan Mey-Tal's Projects</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background: #004f90;
+      color: #fff;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    main {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    section {
+      margin-bottom: 3rem;
+    }
+    h2 {
+      border-left: 5px solid #004f90;
+      padding-left: 1rem;
+      margin-top: 0;
+      color: #004f90;
+    }
+    .year {
+      font-weight: normal;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    ul, ol {
+      padding-left: 1.5rem;
+    }
+    ul li, ol li {
+      margin-bottom: 0.5rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #004f90;
+      color: white;
+    }
+    img {
+      display: block;
+      margin: 1.5rem auto 0 auto;
+      max-width: 100%;
+      border-radius: 4px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Projects</h1>
+    <h1>Jonathan Mey-Tal's Projects</h1>
   </header>
 
   <main>
     <section>
       <h2>My Thesis <span class="year">(2025)</span></h2>
-      <p>The goal of my thesis is to build an accurate and consistent LLM-based agent system capable of answering and reasoning about complex temporal questions grounded in a given document.</p>
-      <p>The core idea is to convert the document into a time-focused RDF knowledge graph, which can be queried using SPARQL to retrieve the desired information. I use the DSPy framework to integrate the different LLM modules and agents, and for their prompt optimization methods.</p>
-      <p>The project includes:</p>
+      <p><strong>Goal:</strong> Build an LLM-based agent system that answers and reasons about complex temporal questions using RDF graphs.</p>
+      <p><strong>Core Idea:</strong> Convert a document into a time-focused RDF knowledge graph and query it with SPARQL. DSPy is used for LLM orchestration and prompt optimization.</p>
       <ul>
-        <li><strong>OWL Schema Generation:</strong> An LLM module (implemented in DSPy and optimized using a small generative dataset I created) produces an OWL schema that captures the core structure and concepts of the text. The schema defines the entity classes and possible relations for the final graph.</li>
-        <li><strong>Entity Extraction and Linking:</strong> I use GLiNER for entity extraction and ReLiK for both entity linking and relation extraction.</li>
-        <li><strong>RDF Graph Construction:</strong> An iterative loop where an LLM generates a candidate graph, which is validated using rdflib. Another LLM generates questions, queries the graph with SPARQL, and uses errors to refine the graph.</li>
-        <li><strong>SPARQL Query Generation:</strong> I use Spinach—an agent-based method to translate natural language questions into accurate SPARQL queries.</li>
+        <li><strong>OWL Schema Generation:</strong> A DSPy-optimized LLM generates OWL schemas defining classes and relations.</li>
+        <li><strong>Entity Extraction & Linking:</strong> GLiNER extracts entities; ReLiK links them and identifies relationships.</li>
+        <li><strong>RDF Graph Construction:</strong> LLMs iteratively propose graphs, validated with rdflib, improved via SPARQL-based QA.</li>
+        <li><strong>SPARQL Query Generation:</strong> Spinach agents learn the graph structure to produce queries from natural language.</li>
       </ul>
     </section>
 
     <section>
       <h2>AudioCorrect <span class="year">(2025)</span></h2>
-      <p>This project explores using speech and audio AI models to build an app that can correct mispronounced or incorrect words in a recording. The user can edit the transcript, and the system modifies the audio accordingly.</p>
-      <p>Main steps:</p>
+      <p><strong>Concept:</strong> A speech editing app that lets users correct words in a recording by editing the transcript.</p>
       <ol>
-        <li>Transcribe audio with WhisperX and extract word-level timings.</li>
-        <li>Identify segments to insert, delete, or replace.</li>
-        <li>Generate audio using TTS. I tried two options: Tortoise (local, slow, low quality) and ElevenLabs API (fast, high quality).</li>
-        <li>Assemble the new audio, using volume adjustments, silence padding, and fade effects for smoother transitions.</li>
+        <li>Transcribe with WhisperX and extract word timings.</li>
+        <li>Mark sections to edit (insert/delete/replace).</li>
+        <li>Generate audio with Tortoise TTS or ElevenLabs API.</li>
+        <li>Assemble audio with fades, silence padding, and volume matching.</li>
       </ol>
-      <img src="AudioCorrecrAPP.png" alt="AudioCorrect App Screenshot" style="width:75%; margin-top:1em;">
+      <img src="AudioCorrecrAPP.png" alt="AudioCorrect App Screenshot">
     </section>
 
     <section>
       <h2>ReDress <span class="year">(2023)</span></h2>
-      <p><em>2nd place at the Samsung NEXT Hackathon for Mobile Generative AI</em></p>
-      <p>We created a second-hand clothing marketplace app using CLIP, a model that aligns images and text in the same vector space for intuitive search and listing.</p>
+      <p><em>2nd Place - Samsung NEXT Hackathon for Mobile Generative AI</em></p>
+      <p><strong>Idea:</strong> A marketplace app for second-hand clothing powered by CLIP embeddings.</p>
       <ul>
-        <li><strong>For buyers:</strong> Search using natural language, which is matched to images using a vector database—no filters or dropdowns needed.</li>
-        <li><strong>For sellers:</strong> Upload an image and a price. No need for manual descriptions or categories.</li>
+        <li><strong>Buyers:</strong> Use natural language to search. CLIP maps it to image embeddings for retrieval—no filters needed.</li>
+        <li><strong>Sellers:</strong> Upload an image and price. CLIP handles categorization and description automatically.</li>
       </ul>
     </section>
   </main>
