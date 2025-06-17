@@ -114,6 +114,13 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
 
+    .modal-content video {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      margin-top: 1rem;
+    }
+
     .close-modal-btn {
       color: #333;
       position: absolute;
@@ -253,7 +260,7 @@
     <section>
       <h2>ReDress <span class="year">(2023)</span></h2>
       <p><em>2nd place - Samsung NEXT Hackathon for Mobile Generative AI</em></p>
-      <p>During the Samsung NEXT Hackathon, we built a prototype app for buying and selling second-hand clothing. Our approach
+      <p>Over one long night,we developed a demo for a mobile app for buying and selling second-hand clothing. Our approach
          leveraged CLIP, a model that maps both images and text into a shared embedding space, enabling powerful search.</p>
       <ul>
         <li><strong>Buyers side:</strong> Search is performed using natural language descriptions. The app retrieves relevant items from a vector
@@ -262,6 +269,67 @@
         <li><strong>Sellers side:</strong> There’s no need to manually assign categories or write descriptions. Sellers can simply upload an image and
                                   set a price the search mechanism takes care of the rest.</li>
       </ul>
+    <!-- Button to open the video modal -->
+      <button class="open-modal-btn" data-modal-target="#redress-video-modal">View Demo</button>
+
+      <!-- The Video Modal for ReDress -->
+      <div class="modal" id="redress-video-modal">
+        <div class="modal-content">
+          <span class="close-modal-btn">&times;</span>
+          <h3>ReDress App Demo</h3>
+          <video controls>
+            <!-- Make sure to place a video file named 'redress_demo.mp4' in your project folder -->
+            <source src="Videos/ReDress_demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>CANNABOT - AI-Powered Medical Cannabis Strain Recommender <span class="year">(2023)</span></h2>
+      <p>
+        Developed as a final Bachelor's Degree project in collaboration with psychiatric therapists Dr. llan Volkov and Dr. Maya Kuperberg,
+        this project addresses the challenge of selecting the right medical cannabis strain from an ever-growing variety. We created an intuitive
+        chatbot, CANNABOT, that leverages LLM to provide personalized strain recommendations based on patients' desired effects.
+      </p>
+      <p>
+        The system is built on a custom database created by mining freely available user comments from online cannabis forums, providing a rich, real-world
+        source of information.
+      </p>
+
+      <h4>How It Works:</h4>
+      <ol>
+        <li><strong>Data Mining:</strong> A multi-threaded code built with Python, and BeautifulSoup extracts thousands of user reviews from online forums on a variety of strains.</li>
+        <li><strong>AI-Powered Data Tagging:</strong> Using prompt engineering and the OpenAI API, each review is tagged with a list of predefined effects (created by our domain experts) to structure the unstructured text.</li>
+        <li><strong>Database Construction:</strong> The system parses the API's response to build a database, mapping strains to specific effects with a corresponding probability score.</li>
+        <li><strong>Processing a user request:</strong> A retrieval system processes user requests. It retrieves the most relevant strain from our database according to the extracted effects from the user request and uses the OpenAI API to generate an accurate, natural-language recommendation.</li>
+        <li><strong>WhatsApp Integration:</strong> Users can interact with CANNABOT seamlessly through WhatsApp, thanks to the Twilio API, making it accessible and easy to use.</li>
+      </ul>
+
+      <!-- Button to open the image slider modal -->
+      <button class="open-modal-btn" data-modal-target="#cannabot-slider-modal">View Images</button>
+
+      <!-- The Slider Modal for CANNABOT -->
+      <div class="modal" id="cannabot-slider-modal">
+        <div class="modal-content">
+          <span class="close-modal-btn">&times;</span>
+          <div class="slider">
+            <div class="slides">
+              <!-- Add your images for the CANNABOT project here -->
+              <div class="slide">
+                <img src="images/CANABOT_demo.png" alt="CANNABOT chat interface" onerror="this.onerror=null;this.src='https://placehold.co/800x600/e2e8f0/4a5568?text=Image+1+Not+Found';">
+              </div>
+              <div class="slide">
+                <img src="images/CANABOT_team.png" alt="CANNABOT system architecture" onerror="this.onerror=null;this.src='https://placehold.co/800x600/e2e8f0/4a5568?text=Image+2+Not+Found';">
+              </div>
+            </div>
+            <!-- Next and previous buttons -->
+            <button class="slider-btn prev">&#10094;</button>
+            <button class="slider-btn next">&#10095;</button>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -308,7 +376,7 @@
         if (modal == null) return;
         modal.classList.add('active'); // The 'active' class uses CSS to 'display: flex'
         
-        // Reset slider to the first image every time the modal is opened
+        // Reset slider to the first image if the modal contains a slider
         const slider = modal.querySelector('.slider');
         if (slider) {
             const slides = slider.querySelector('.slides');
@@ -320,6 +388,12 @@
       function closeModal(modal) {
         if (modal == null) return;
         modal.classList.remove('active');
+        
+        // Pause video when modal is closed to stop it from playing in the background
+        const video = modal.querySelector('video');
+        if (video) {
+          video.pause();
+        }
       }
 
       // --- Slider logic for all sliders on the page ---
@@ -353,7 +427,6 @@
       });
     });
   </script>
-
 
 </body>
 </html>
