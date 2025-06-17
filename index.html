@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jonathan Mey-Tal's Projects</title>
-  <style>
+    <style>
     /* --- Original Styles --- */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -66,7 +66,7 @@
       box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     }
 
-    /* --- New Styles for Modal and Slider --- */
+    /* --- Styles for Modal and Slider --- */
     .open-modal-btn {
       background-color: #004f90;
       color: white;
@@ -108,17 +108,30 @@
       padding: 20px;
       border: 1px solid #888;
       width: 90%;
-      max-width: 800px;
+      max-width: 800px; /* Default max-width for landscape images */
+      max-height: 85vh; /* New: Constrain the max height of the popup box */
+      overflow-y: auto; /* New: Add a scrollbar if content is too tall */
       border-radius: 8px;
       position: relative;
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
+    
+    /* Specific size for video popups */
+    .modal-content.video-modal {
+      max-width: 640px; 
+    }
+    
+    /* Specific size for portrait (phone screenshot) popups */
+    .modal-content.image-modal-portrait {
+      max-width: 450px;
+    }
 
-    .modal-content video {
+    .modal-content video, .modal-content .slide img {
       width: 100%;
       height: auto;
-      border-radius: 4px;
-      margin-top: 1rem;
+      /* New: ensure the media itself doesn't overflow the container */
+      max-height: 75vh; 
+      object-fit: contain; /* New: makes the image fit without being cropped */
     }
 
     .close-modal-btn {
@@ -132,7 +145,6 @@
       z-index: 1;
     }
 
-    /* Slider-specific styles */
     .slider {
       position: relative;
       width: 100%;
@@ -149,10 +161,13 @@
       box-sizing: border-box;
     }
 
+    /* This rule is now covered by the .modal-content video, .modal-content .slide img rule above */
+    /*
     .slide img {
       width: 100%;
       display: block;
     }
+    */
 
     .slider-btn {
       position: absolute;
