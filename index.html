@@ -111,7 +111,28 @@
       </ol>
       <p>Reassemble the modified audio: to ensure smoother transitions, I applied volume adjustments, silence padding, and fade
          effects between overlapping segments.</p>
-      <img src="images/AudioCorrecrAPP.png" alt="AudioCorrect App Screenshot">
+        <button class="open-modal-btn" data-modal-target="#audiocorrect-slider-modal">View Images</button>
+
+      <div class="modal" id="audiocorrect-slider-modal">
+        <div class="modal-content">
+          <span class="close-modal-btn">&times;</span>
+          <div class="slider">
+            <div class="slides">
+              <div class="slide">
+                <img src="AudioCorrectAPP.png" alt="AudioCorrect App main screen">
+              </div>
+              <div class="slide">
+                <img src="AudioCorrectAPP2.png" alt="AudioCorrect workflow diagram">
+              </div>
+              <div class="slide">
+                <img src="AudioCorrectAPP3.png" alt="Editing view in AudioCorrect">
+              </div>
+            </div>
+            <button class="slider-btn prev">&#10094;</button>
+            <button class="slider-btn next">&#10095;</button>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section>
@@ -132,5 +153,92 @@
   <footer>
     <p>© 2025 Jonathan Mey-Tal</p>
   </footer>
+
+  <!-- JAVASCRIPT FOR MODAL AND SLIDER -->
+  <!-- Placed at the end of the body to ensure all HTML elements are loaded first -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- Modal opening/closing logic ---
+      const openModalButtons = document.querySelectorAll('.open-modal-btn');
+      const closeModalButtons = document.querySelectorAll('.close-modal-btn');
+
+      // Add click listener to all "Open Modal" buttons
+      openModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Find the modal specified in the button's 'data-modal-target' attribute
+          const modal = document.querySelector(button.dataset.modalTarget);
+          openModal(modal);
+        });
+      });
+
+      // Add click listener to all "Close" (X) buttons
+      closeModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Find the closest parent with the 'modal' class and close it
+          const modal = button.closest('.modal');
+          closeModal(modal);
+        });
+      });
+
+      // Add click listener to the window to close modal if clicking outside the content
+      window.addEventListener('click', event => {
+          document.querySelectorAll('.modal.active').forEach(modal => {
+              if (event.target == modal) {
+                  closeModal(modal);
+              }
+          });
+      });
+
+      function openModal(modal) {
+        if (modal == null) return;
+        modal.classList.add('active'); // The 'active' class uses CSS to 'display: flex'
+        
+        // Reset slider to the first image every time the modal is opened
+        const slider = modal.querySelector('.slider');
+        if (slider) {
+            const slides = slider.querySelector('.slides');
+            slides.style.transform = 'translateX(0%)';
+            slider.dataset.currentIndex = 0;
+        }
+      }
+
+      function closeModal(modal) {
+        if (modal == null) return;
+        modal.classList.remove('active');
+      }
+
+      // --- Slider logic for all sliders on the page ---
+      const sliders = document.querySelectorAll('.slider');
+
+      sliders.forEach(slider => {
+        const slides = slider.querySelector('.slides');
+        const prevButton = slider.querySelector('.slider-btn.prev');
+        const nextButton = slider.querySelector('.slider-btn.next');
+        const slideCount = slides.children.length;
+        
+        // Store the current index on the slider element itself
+        slider.dataset.currentIndex = 0;
+
+        nextButton.addEventListener('click', () => {
+          let currentIndex = parseInt(slider.dataset.currentIndex);
+          // Move to the next slide, looping back to the start if at the end
+          currentIndex = (currentIndex + 1) % slideCount;
+          slider.dataset.currentIndex = currentIndex;
+          // Move the .slides container horizontally
+          slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+        });
+
+        prevButton.addEventListener('click', () => {
+          let currentIndex = parseInt(slider.dataset.currentIndex);
+          // Move to the previous slide, looping to the end if at the start
+          currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+          slider.dataset.currentIndex = currentIndex;
+          slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+        });
+      });
+    });
+  </script>
+
+
 </body>
 </html>
