@@ -74,35 +74,57 @@
   <main>
     <section>
       <h2>My Thesis <span class="year">(2025)</span></h2>
-      <p><strong>Goal:</strong> Build an LLM-based agent system that answers and reasons about complex temporal questions using RDF graphs.</p>
-      <p><strong>Core Idea:</strong> Convert a document into a time-focused RDF knowledge graph and query it with SPARQL. DSPy is used for LLM orchestration and prompt optimization.</p>
+      <p><strong>Goal:</strong> Build n accurate and consistent LLM-based agent system capable of answering and reasoning about complex 
+                                temporal questions grounded in a given document.</p>
+      <p><strong>Core Idea:</strong> Convert a document into a time focused RDF knowledge graph, which can be queried using SPARQL to retrieve 
+                                the desired information. I use the DSPy framework to integrate the different LLM modules and agents, and for their 
+                                prompt optimization methods.</p>
+      <p>The project is built from the following main components:</p>
       <ul>
-        <li><strong>OWL Schema Generation:</strong> A DSPy-optimized LLM generates OWL schemas defining classes and relations.</li>
-        <li><strong>Entity Extraction & Linking:</strong> GLiNER extracts entities; ReLiK links them and identifies relationships.</li>
-        <li><strong>RDF Graph Construction:</strong> LLMs iteratively propose graphs, validated with rdflib, improved via SPARQL-based QA.</li>
-        <li><strong>SPARQL Query Generation:</strong> Spinach agents learn the graph structure to produce queries from natural language.</li>
+        <li><strong>OWL Schema Generation:</strong> An LLM module (implemented in DSPy and optimized using a small generative dataset I created) 
+                                produces an OWL schema that captures the core structure and concepts of the text. The schema defines the
+                                entity classes and possible relations for the final graph.</li>
+        <li><strong>Entity Extraction & Linking:</strong> Based on the schema and the document, I use GLiNER for entity extraction and
+                                ReLiK for both entity linking and relation extraction.</li>
+        <li><strong>RDF Graph Construction:</strong> This is an iterative loop: an LLM generates a candidate graph, which is then validated
+                                using a formal RDF parser (rdflib). Another LLM generates questions about the original text, attempts to answer them
+                                using SPARQL queries on the graph, and identifies inconsistencies. These are fed back into the graph generation module
+                                to refine and improve the graph.</li>
+        <li><strong>SPARQL Query Generation:</strong> To translate natural language questions into SPARQL queries, I use Spinach—an agent-
+                                based method that learns and navigates the structure of the RDF graph to produce accurate queries.</li>
       </ul>
     </section>
 
     <section>
       <h2>AudioCorrect <span class="year">(2025)</span></h2>
-      <p><strong>Concept:</strong> A speech editing app that lets users correct words in a recording by editing the transcript.</p>
+      <p>This project explores the use of speech and audio AI models to create an app that can correct mispronounced or incorrect
+        words in an audio recording. Given a main audio file and reference recordings, the system transcribes the content and allows for
+        text-level editing. The output is a modified version of the original recording, with new segments inserted in the main record.
+        The process consists of the following steps:</p>
       <ol>
-        <li>Transcribe with WhisperX and extract word timings.</li>
-        <li>Mark sections to edit (insert/delete/replace).</li>
-        <li>Generate audio with Tortoise TTS or ElevenLabs API.</li>
-        <li>Assemble audio with fades, silence padding, and volume matching.</li>
+        <li>ranscribe the input audio and extract word-level timings using WhisperX.</li>
+        <li>Mark sections to edit (equal/delete/replace/insert).</li>
+        <li>Generate the required segments using a TTS model. I implemented two options: (1) Tortoise TTS (local, but slow and
+            lower quality), and (2) ElevenLabs API (faster and higher quality).</li>
+        <li>Reassemble the modified audio: to ensure smoother transitions, I applied volume adjustments, silence padding, and fade
+            effects between overlapping segments.</li>
       </ol>
+      <p>Reassemble the modified audio: to ensure smoother transitions, I applied volume adjustments, silence padding, and fade
+         effects between overlapping segments.</p>
       <img src="AudioCorrecrAPP.png" alt="AudioCorrect App Screenshot">
     </section>
 
     <section>
       <h2>ReDress <span class="year">(2023)</span></h2>
-      <p><em>2nd Place - Samsung NEXT Hackathon for Mobile Generative AI</em></p>
-      <p><strong>Idea:</strong> A marketplace app for second-hand clothing powered by CLIP embeddings.</p>
+      <p><em>2nd place - Samsung NEXT Hackathon for Mobile Generative AI</em></p>
+      <p>During the Samsung NEXT Hackathon, we built a prototype app for buying and selling second-hand clothing. Our approach
+         leveraged CLIP, a model that maps both images and text into a shared embedding space, enabling powerful search.</p>
       <ul>
-        <li><strong>Buyers:</strong> Use natural language to search. CLIP maps it to image embeddings for retrieval—no filters needed.</li>
-        <li><strong>Sellers:</strong> Upload an image and price. CLIP handles categorization and description automatically.</li>
+        <li><strong>Buyers side:</strong> Search is performed using natural language descriptions. The app retrieves relevant items from a vector
+                                  database by comparing the description’s embedding with image embeddings eliminating the need for traditional filters or
+                                  category navigation.</li>
+        <li><strong>Sellers side:</strong> There’s no need to manually assign categories or write descriptions. Sellers can simply upload an image and
+                                  set a price the search mechanism takes care of the rest.</li>
       </ul>
     </section>
   </main>
