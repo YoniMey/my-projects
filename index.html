@@ -207,12 +207,12 @@
       <h2>My Thesis <span class="year">(2025)</span></h2>
     
       <p><strong>Goal:</strong> Develop a robust LLM-based system capable of constructing fully connected, logically consistent 
-         temporal graphs from raw text and pre-identified event nodes.</p>
+         temporal graphs from raw text and pre-identified events and times.</p>
     
       <p><strong>Core Idea:</strong> Treat Temporal Relation Extraction (TRE) as a graph construction problem based on the 
-         <strong>TimeML specification language</strong>. The system utilizes an LLM as a semantic annotator, optimized via 
+         <strong>TimeML</strong> specification language. The system utilizes an LLM as a semantic annotator, optimized via 
          <strong>Generative Evolutionary Prompt Optimization (GEPA)</strong> within the <strong>DSPy</strong> framework. 
-         To ensure the graph remains valid—void of symmetry and transitivity conflicts—I employ 
+         To ensure the graph remains valid (without symmetry and transitivity conflicts) - I employ 
          <strong>Integer Linear Programming (ILP)</strong> as a logic constraint solver.</p>
     
       <p>The method operates through the following key components:</p>
@@ -225,7 +225,7 @@
         </li>
     
         <li><strong>Handling Quadratic Complexity:</strong> 
-            A major challenge in temporal graph construction is the <strong>quadratic complexity ($O(N^2)$)</strong> 
+            A major challenge in temporal graph construction is the <strong>quadratic complexity (<i>O</i>(<i>N</i><sup>2</sup>))</strong> 
             relative to the number of events and time expressions. To manage this computational bottleneck, 
             the system avoids processing the entire graph at once, instead dividing the list of candidate pairs into manageable 
             iterative batches.
@@ -234,7 +234,7 @@
         <li><strong>Transitive Closure & Inference:</strong> 
             After processing each batch, the system computes the transitive closure of the partial graph. This step is crucial 
             for efficiency: it allows the system to <strong>infer</strong> many relations logically (e.g., if A→B and B→C, then A→C) 
-            rather than asking the LLM to predict them, while immediately surfacing contradictions.
+            rather than asking the LLM to predict them, while immediately <strong>surfacing contradictions</strong>.
         </li>
     
         <li><strong>ILP Conflict Resolution:</strong> 
