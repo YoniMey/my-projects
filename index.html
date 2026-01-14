@@ -203,29 +203,47 @@
   </header>
 
   <main>
-    <section>
+   <section>
       <h2>My Thesis <span class="year">(2025)</span></h2>
-      <p><strong>Goal:</strong> Build n accurate and consistent LLM-based agent system capable of answering and reasoning about complex 
-                                temporal questions grounded in a given document.</p>
-      <p><strong>Core Idea:</strong> Convert a document into a time focused RDF knowledge graph, which can be queried using SPARQL to retrieve 
-                                the desired information. I use the DSPy framework to integrate the different LLM modules and agents, and for their 
-                                prompt optimization methods.</p>
-      <p>The project is built from the following main components:</p>
+    
+      <p><strong>Goal:</strong> Develop a robust LLM-based system capable of constructing fully connected, logically consistent 
+         temporal graphs from raw text and pre-identified events and times.</p>
+    
+      <p><strong>Core Idea:</strong> Treat Temporal Relation Extraction (TRE) as a graph construction problem based on the 
+         <strong>TimeML</strong> specification language. The system utilizes an LLM as a semantic annotator, optimized via 
+         <strong>Generative Evolutionary Prompt Optimization (GEPA)</strong> within the <strong>DSPy</strong> framework. 
+         To ensure the graph remains valid (without symmetry and transitivity conflicts) - I employ 
+         <strong>Integer Linear Programming (ILP)</strong> as a logic constraint solver.</p>
+    
+      <p>The method operates through the following key components:</p>
+    
       <ul>
-        <li><strong>OWL Schema Generation:</strong> An LLM module (implemented in DSPy and optimized using a small generative dataset I created) 
-                                produces an OWL schema that captures the core structure and concepts of the text. The schema defines the
-                                entity classes and possible relations for the final graph.</li>
-        <li><strong>Entity Extraction & Linking:</strong> Based on the schema and the document, I use GLiNER for entity extraction and
-                                ReLiK for both entity linking and relation extraction.</li>
-        <li><strong>RDF Graph Construction:</strong> This is an iterative loop: an LLM generates a candidate graph, which is then validated
-                                using a formal RDF parser (rdflib). Another LLM generates questions about the original text, attempts to answer them
-                                using SPARQL queries on the graph, and identifies inconsistencies. These are fed back into the graph generation module
-                                to refine and improve the graph.</li>
-        <li><strong>SPARQL Query Generation:</strong> To translate natural language questions into SPARQL queries, I use Spinach—an agent-
-                                based method that learns and navigates the structure of the RDF graph to produce accurate queries.</li>
+        <li><strong>Optimized LLM Annotator:</strong> 
+            The LLM evaluates pairs of event nodes to predict their temporal relationship (e.g., <em>BEFORE, AFTER, SIMULTANEOUS</em>). 
+            To maximize performance without manual prompt engineering, I use <strong>DSPy and GEPA</strong> to automatically 
+            discover and optimize the most effective prompts for the model.
+        </li>
+    
+        <li><strong>Handling Quadratic Complexity:</strong> 
+            A major challenge in temporal graph construction is the <strong>quadratic complexity (<i>O</i>(<i>N</i><sup>2</sup>))</strong> 
+            relative to the number of events and time expressions. To manage this computational bottleneck, 
+            the system avoids processing the entire graph at once, instead dividing the list of candidate pairs into manageable 
+            iterative batches.
+        </li>
+    
+        <li><strong>Transitive Closure & Inference:</strong> 
+            After processing each batch, the system computes the transitive closure of the partial graph. This step is crucial 
+            for efficiency: it allows the system to <strong>infer</strong> many relations logically (e.g., if A→B and B→C, then A→C) 
+            rather than asking the LLM to predict them, while immediately <strong>surfacing contradictions</strong>.
+        </li>
+    
+        <li><strong>ILP Conflict Resolution:</strong> 
+            When the transitive closure reveals conflicts (e.g., a violation of symmetry or transitivity), the sub-graph is 
+            formulated as an <strong>Integer Linear Program (ILP)</strong>. The solver identifies the minimal set of edge 
+            corrections required to restore global consistency before proceeding to the next batch.
+        </li>
       </ul>
     </section>
-
     <section>
       <h2>AudioCorrect <span class="year">(2025)</span></h2>
       <p>This project explores the use of speech and audio AI models to create an app that can correct mispronounced or incorrect
@@ -233,7 +251,7 @@
         text-level editing. The output is a modified version of the original recording, with new segments inserted in the main record.
         The process consists of the following steps:</p>
       <ol>
-        <li>ranscribe the input audio and extract word-level timings using WhisperX.</li>
+        <li>transcribe the input audio and extract word-level timings using WhisperX.</li>
         <li>Mark sections to edit (equal/delete/replace/insert).</li>
         <li>Generate the required segments using a TTS model. I implemented two options: (1) Tortoise TTS (local, but slow and
             lower quality), and (2) ElevenLabs API (faster and higher quality).</li>
